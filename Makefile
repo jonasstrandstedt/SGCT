@@ -44,7 +44,7 @@ ifdef TEST
 		FLAGS += -lgtest -L"googletest/lib/mac_lib"
 	else ifeq ($(OS),MINGW32_NT-6.1)
 		# TODO: compile gtest on windows
-		FLAGS += -lgtest -L"googletest/lib/win_mingw_lib"
+		FLAGS += 
 	endif
 endif
 
@@ -56,7 +56,7 @@ ifdef SOUND
 	else ifeq ($(OS),Darwin)
 		FLAGS += -framework ALUT -framework OpenAL
 	else ifeq ($(OS),MINGW32_NT-6.1)
-		FLAGS += 
+		FLAGS += -lalut
 	endif
 else
 	# Adding a define so the source files knows if built with or without sound
