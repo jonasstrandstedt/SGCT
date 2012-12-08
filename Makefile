@@ -95,7 +95,7 @@ clean:
 
 # Displays avaalable commands
 help:
-	-@echo "make:"
+	-@echo "Building with make:"
 	-@echo "... all"
 	-@echo "... TEST=1"
 	-@echo "... SOUND=1"
@@ -103,6 +103,12 @@ help:
 	-@echo "... install-macosx"
 	-@echo "... install-ubuntu"
 	-@echo "... install-windows"
+	-@echo " "
+	-@echo "Run with sgct_sin.sh:"
+	-@echo "mac & linux: ./sgct_sim.sh"
+	-@echo "mac & linux: ./sgct_sim.sh VR"
+	-@echo "windows & msys: sh sgct_sim.sh"
+	-@echo "windows & msys: sh sgct_sim.sh VR"
 
 # install libraries script for Ubuntu
 install-ubuntu:
