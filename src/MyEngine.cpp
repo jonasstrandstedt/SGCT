@@ -7,6 +7,9 @@ MyEngine::MyEngine(){
 	_isMaster = false;
 	_testVar = 0;
 }
+MyEngine::~MyEngine(){
+	delete _sound;
+}
 
 void MyEngine::myDrawFun(){
 	//set current shader program
@@ -42,6 +45,8 @@ void MyEngine::myInitOGLFun() {
 	_curr_timeLoc = sgct::ShaderManager::Instance()->getShader( "SimpleColor").getUniformLocation( "curr_time" );
 
 	sgct::ShaderManager::Instance()->unBindShader();
+
+	_sound = new MySound("data/audio/file1.wav");
 }
 
 void MyEngine::myEncodeFun() {

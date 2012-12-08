@@ -2,10 +2,12 @@
 #define MYENGINE_H
 
 #include "sgct.h"
+#include "MySound.h"
 
 class MyEngine {
 public:
 	MyEngine();
+	~MyEngine();
 
 	void myDrawFun();
 	void myPreSyncFun();
@@ -22,8 +24,8 @@ private:
 	double _curr_time;
 	int _curr_timeLoc;
 	bool _isMaster;
-
 	int _testVar;
+	MySound *_sound;
 };
 
 #endif

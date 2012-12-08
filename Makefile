@@ -6,11 +6,11 @@ RM = rm
 MESSAGE =
 
 #specify dependency list for all .cpp files
-OBJECTS ?= src/main.o src/MyEngine.o
+OBJECTS ?= src/main.o src/MyEngine.o src/MySound.o
 OUTPUT ?= Program
 FLAGS ?=
 CXXFLAGS ?= 
-INCPATH ?= -isystem"sgct_0_9_5/include"
+INCPATH ?= -isystem"sgct_0_9_5/include" -isystem"sgct_0_9_5/include_openal"
 
 # Specify what needs to be includes
 OPENGL=1
@@ -22,7 +22,7 @@ OPENGL=1
 ifdef OPENGL
 	MESSAGE += OpenGL,
 	ifeq ($(OS),Linux)
-		FLAGS += -lsgct -lGL -lGLU -lX11 -lXrandr -static-libgcc -static-libstdc++ -L"sgct_0_9_5/linux_lib"
+		FLAGS += -lsgct -lGL -lGLU -lX11 -lXrandr -lrt -static-libgcc -static-libstdc++ -L"sgct_0_9_5/linux_lib"
 	else ifeq ($(OS),Darwin)
 		FLAGS += -framework Cocoa -framework OpenGL -lglfw -lsgct -L"sgct_0_9_5/mac_lib"
 	else ifeq ($(OS),MINGW32_NT-6.1)
@@ -39,7 +39,7 @@ ifdef TEST
 	INCPATH += -isystem"src/UnitTestSrc" -D"_TEST_" -isystem"googletest"
 	CXXFLAGS += -pedantic -Wall -Wshadow -Wextra -O2
 	ifeq ($(OS),Linux)
-		FLAGS += -lgtest -L"googletest/lib/linux_lib"
+		FLAGS += -lgtest -lpthread -L"googletest/lib/linux_lib"
 	else ifeq ($(OS),Darwin)
 		FLAGS += -lgtest -L"googletest/lib/mac_lib"
 	else ifeq ($(OS),MINGW32_NT-6.1)
@@ -56,7 +56,8 @@ ifdef SOUND
 	else ifeq ($(OS),Darwin)
 		FLAGS += -framework ALUT -framework OpenAL
 	else ifeq ($(OS),MINGW32_NT-6.1)
-		FLAGS += -lalut
+		# TODO: include libs
+		FLAGS += -L"sgct_0_9_5/win_mingw32_alut" -lalut -lOpenAL32
 	endif
 else
 	# Adding a define so the source files knows if built with or without sound
@@ -76,11 +77,13 @@ ifndef TEST
 endif
 
 all: $(OBJECTS)
+	-@echo " "
 	-@echo "Linking for $(OS)"
 	-@echo "Including $(MESSAGE)"
 	-@echo " "
-	$(CC) -o $(OUTPUT) $(OBJECTS) $(INCPATH) $(CXXFLAGS) $(FLAGS) 
+	$(CC) $(OBJECTS) $(INCPATH) $(CXXFLAGS) $(FLAGS) -o $(OUTPUT)
 
+# removes object files but not binaries
 clean:
 	-@echo "Cleaning"
 	-$(RM) src/*.o
@@ -89,5 +92,30 @@ clean:
 # pattern that compiles all .o files
 %.o: %.cpp
 	$(CC) $(CXXFLAGS) $(INCPATH) -c $< -o $@
+
+# Displays avaalable commands
+help:
+	-@echo "make:"
+	-@echo "... all"
+	-@echo "... TEST=1"
+	-@echo "... SOUND=1"
+	-@echo "... clean"
+	-@echo "... install-macosx"
+	-@echo "... install-ubuntu"
+	-@echo "... install-windows"
+
+# install libraries script for Ubuntu
+install-ubuntu:
+	sudo apt-get install libalut0 libalut-dev
+
+	# install libraries script for Mac OSX
+install-macosx:
+	sudo cp -r sgct_0_9_5/mac_alut/ALUT.framework /System/Library/Frameworks/
+	sudo cp -r sgct_0_9_5/mac_alut/ALUT.framework.dSYM/ /System/Library/Frameworks/
+	
+install-windows:
+	-@echo "Needs to be run as administrator"
+	-@echo "Trying to copy sgct_0_9_5/win_mingw32_alut/libalut.dll to C:\Windows\System32\libalut.dll"
+	cp sgct_0_9_5/win_mingw32_alut/libalut.dll C:\Windows\System32\
 
 

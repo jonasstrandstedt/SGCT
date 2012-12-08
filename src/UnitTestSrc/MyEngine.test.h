@@ -1,4 +1,4 @@
-#include "../MyEngine.h";
+#include "../MyEngine.h"
 
 
 TEST (MyEngineTest, TestSet)

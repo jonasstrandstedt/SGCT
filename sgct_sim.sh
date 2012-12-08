@@ -44,15 +44,15 @@ fi
 echo "Current platform is "$PLATFORM
 echo "Running program $1"
 
-$STARTER $BINARY" -config "$CONFIG" -local 0" &
+$STARTER $BINARY -config $CONFIG -local 0 &
 
 if [ "$SLAVES" = "YES" ]
 	then
 	echo "Waiting for master to start"
 	sleep 5
 	echo "Starting slaves"
-	$STARTER $BINARY" -config "$CONFIG" -local 1 --slave" &
-	$STARTER $BINARY" -config "$CONFIG" -local 2 --slave" &
-	$STARTER $BINARY" -config "$CONFIG" -local 3 --slave" &
+	$STARTER $BINARY -config $CONFIG -local 1 --slave &
+	$STARTER $BINARY -config $CONFIG -local 2 --slave &
+	$STARTER $BINARY -config $CONFIG -local 3 --slave &
 fi
 
