@@ -137,8 +137,9 @@ install-macosx:
 	sudo cp -r sgct_0_9_5/mac_alut/ALUT.framework.dSYM/ /System/Library/Frameworks/
 	
 install-windows:
-	-@echo "Needs to be run as administrator"
-	-@echo "Trying to copy sgct_0_9_5/win_mingw32_alut/libalut.dll to C:\Windows\System32\libalut.dll"
+	-@echo "Needs to be run as administrator or the copying will fail."
+	-@echo "Copying from sgct_0_9_5/win_mingw32_alut/*.dll to C:\Windows\System32\"
 	cp sgct_0_9_5/win_mingw32_alut/libalut.dll C:\Windows\System32\
+	cp sgct_0_9_5/win_mingw32_alut/OpenAL32.dll C:\Windows\System32\
 
 

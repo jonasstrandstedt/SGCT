@@ -44,11 +44,12 @@ Det finns installationsscript för att snabbare komma igång biblioteken för lj
 	// mac
 	$ make install-macosx
 	
-	// windows
+	// windows från en kommandotolk som är startad med administratörsrättigheter
 	$ make install-windows
 	
-Windows
+Windows fix
 ====
-För att kunna använda byggsystemet på windows krävs MinGW 4.7.0 och msys (båda i windows PATH).
-[MinGW 4.7.0](https://c-student.itn.liu.se/wiki/_media/develop:mingw_4.7.0.zip)
-[MSYS](http://www.mingw.org/wiki/MSYS)
+För att kunna använda byggsystemet på windows krävs [MinGW 4.7.0](https://c-student.itn.liu.se/wiki/_media/develop:mingw_4.7.0.zip) och [MSYS](http://www.mingw.org/wiki/MSYS) (båda i windows PATH).
+För att "make install-windows" ska fungera krävs det att kommandotolken är startad med administratörsrättigheter. Högerklicka på länken till cmd.exe och välj "Kör som administratör..".
+
+
