@@ -13,7 +13,7 @@ if [[ "$unamestr" == 'Linux' ]]; then
 elif [[ "$unamestr" == 'Darwin' ]]; then
    PLATFORM='OSX'
    BINARY="./"$BINARY
-elif [[ "$unamestr" == 'MINGW32_NT-6.1' ]]; then
+elif [[ "$unamestr" == *MINGW* ]]; then
    PLATFORM='Windows'
    STARTER="start cmd /k"
    BINARY=$BINARY".exe"
