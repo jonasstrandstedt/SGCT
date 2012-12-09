@@ -1,25 +1,19 @@
-SGCT
-====
+# SGCT
 Simple Graphics Cluster Toolkit (SGCT) är som namnet antyder ett bibliotek för hantera datorgrafik i nätverkskluster, det fungerar även ypperligt att använda för applikationer med en nod. Se https://c-student.itn.liu.se/wiki/ för mer information om SGCT.
 
-Installation
-===
-Windows
-==
+## Installation
+#### Windows
 På windows krävs [MinGW 4.7.0](https://c-student.itn.liu.se/wiki/_media/develop:mingw_4.7.0.zip) och [MSYS](http://www.mingw.org/wiki/MSYS) (båda i windows PATH).
 För att "make install-windows" ska fungera krävs det att kommandotolken är startad med administratörsrättigheter. Högerklicka på länken till cmd.exe och välj "Kör som administratör". Föredrar du manuell installation är det bara att kopiera sgct_0_9_5/win_mingw32_alut/*.dll till C:/Windows/system32/.
 
-Mac OSX
-==
+#### Mac OSX
 Kör "make install-macosx". Sciptet kopierar sgct_0_9_5/mac_alut/ALUT.framework och sgct_0_9_5/mac_alut/ALUT.framework.dSYM/ till /System/Library/Frameworks/ och 
 
-Ubuntu
-==
+#### Ubuntu
 Kör "make install-ubuntu". Scriptet kör "sudo apt-get install libalut0 libalut-dev".
 
 
-Använda byggsystemet
-===
+## Använda byggsystemet
 
 Kommandon som Makefilen stödjer är följande
 
@@ -63,8 +57,7 @@ Det finns installationsscript för att snabbare komma igång biblioteken för lj
 	// windows från en kommandotolk som är startad med administratörsrättigheter
 	$ make install-windows
 	
-Utöka och förändra för egna projekt
-===
+## Utöka och förändra för egna projekt
 Det som behöver ändras i Makefilen är att definera de object (kompilerade .cpp filer) som ska ingå. Det görs genom att utöka eller byta ut
 
 	// Första raden är med ?= då det går att kompilera temporära object med 'make OBJECTS="src/Fil.o src/AnnanFil.o"'
