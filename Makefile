@@ -10,7 +10,7 @@ OBJECTS ?= src/main.o src/MyEngine.o src/MySound.o
 OUTPUT ?= Program
 FLAGS ?=
 CXXFLAGS ?= 
-INCPATH ?= -isystem"sgct_0_9_5/include" -isystem"sgct_0_9_5/include_openal"
+INCPATH ?= -isystem"sgct_0_9_5/include"
 
 # Specify what needs to be includes
 OPENGL=1
@@ -34,16 +34,15 @@ endif
 # check if argument TEST=1 is set, reguires googletest
 ifdef TEST
 	MESSAGE += Test,
-	OBJECTS += src/UnitTestSrc/UnitTests.o
+	OBJECTS += UnitTestSrc/gtest/gtest-all.o UnitTestSrc/UnitTests.o
 	# includes necessary .h files and defines
-	INCPATH += -isystem"src/UnitTestSrc" -D"_TEST_" -isystem"googletest"
-	CXXFLAGS += -pedantic -Wall -Wshadow -Wextra -O2
+	INCPATH += -isystem"UnitTestSrc" -D"_TEST_"
+	CXXFLAGS += -pedantic -Wall -Wshadow -Wextra -O2 -Wno-long-long
 	ifeq ($(OS),Linux)
-		FLAGS += -lgtest -lpthread -L"googletest/lib/linux_lib"
+		FLAGS += -lpthread
 	else ifeq ($(OS),Darwin)
-		FLAGS += -lgtest -L"googletest/lib/mac_lib"
+		FLAGS += 
 	else ifeq ($(OS),MINGW32_NT-6.1)
-		# TODO: compile gtest on windows
 		FLAGS += 
 	endif
 endif
@@ -87,7 +86,16 @@ all: $(OBJECTS)
 clean:
 	-@echo "Cleaning"
 	-$(RM) src/*.o
-	-$(RM) src/UnitTestSrc/*.o
+	-$(RM) UnitTestSrc/*.o
+
+# removes object files and binaries
+clean-all:
+	-@echo "Cleaning all"
+	-$(RM) src/*.o
+	-$(RM) UnitTestSrc/*.o
+	-$(RM) UnitTestSrc/gtest/*.o
+	-$(RM) Program
+	-$(RM) Program.exe
 
 # pattern that compiles all .o files
 %.o: %.cpp
@@ -100,6 +108,7 @@ help:
 	-@echo "... TEST=1"
 	-@echo "... SOUND=1"
 	-@echo "... clean"
+	-@echo "... clean-all"
 	-@echo "... install-macosx"
 	-@echo "... install-ubuntu"
 	-@echo "... install-windows"
