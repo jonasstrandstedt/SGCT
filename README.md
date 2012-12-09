@@ -22,6 +22,9 @@ SGCT fungerar för windows (mingw 4.7.0), linux och mac.
 	// ta bort objektfilerna
 	$ make clean
 	
+	// ta bort alla objektfiler samt binärer
+	$ make clean-all
+	
 För att köra programmet finns det en körfil som heter sgct_sim.sh. Windows kräver att msys finns med sh i path.
 
 	// köra simulator (linux och mac)
