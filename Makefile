@@ -1,4 +1,13 @@
-OS = $(shell uname -s)
+uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+ifeq ($(uname_S),Linux)
+	OS = Linux
+endif
+ifeq ($(uname_S),Darwin)
+	OS = Darwin
+endif
+ifneq (,$(findstring MINGW,$(uname_S)))
+	OS = MinGW
+endif
 CC = g++
 MV = mv
 CP = cp
@@ -25,7 +34,7 @@ ifdef OPENGL
 		FLAGS += -lsgct -lGL -lGLU -lX11 -lXrandr -lrt -static-libgcc -static-libstdc++ -L"sgct_0_9_5/linux_lib"
 	else ifeq ($(OS),Darwin)
 		FLAGS += -framework Cocoa -framework OpenGL -lglfw -lsgct -L"sgct_0_9_5/mac_lib"
-	else ifeq ($(OS),MINGW32_NT-6.1)
+	else ifeq ($(OS),MinGW)
 		OUTPUT = Program.exe
 		FLAGS += -L"sgct_0_9_5/win_mingw32_lib" -lsgct32 -lopengl32 -lglu32 -lws2_32 -static-libgcc -static-libstdc++
 	endif
@@ -42,7 +51,7 @@ ifdef TEST
 		FLAGS += -lpthread
 	else ifeq ($(OS),Darwin)
 		FLAGS += 
-	else ifeq ($(OS),MINGW32_NT-6.1)
+	else ifeq ($(OS),MinGW)
 		FLAGS += 
 	endif
 endif
@@ -54,8 +63,7 @@ ifdef SOUND
 		FLAGS += -lalut
 	else ifeq ($(OS),Darwin)
 		FLAGS += -framework ALUT -framework OpenAL
-	else ifeq ($(OS),MINGW32_NT-6.1)
-		# TODO: include libs
+	else ifeq ($(OS),MinGW)
 		FLAGS += -L"sgct_0_9_5/win_mingw32_alut" -lalut -lOpenAL32
 	endif
 else
